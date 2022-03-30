@@ -41,7 +41,14 @@
                                     -
                                 @endif
                             </td>
-                            <td></td>
+                            <td>
+                                @if ($post->tags)
+                                    @foreach ($post->tags as $tag)
+                                        <div class="badge" style="background-color: {{ $tag->color }}">
+                                            {{ $tag->label }}</div>
+                                    @endforeach
+                                @endif
+                            </td>
                             <td>{{ $post->slug }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td class="d-flex">
