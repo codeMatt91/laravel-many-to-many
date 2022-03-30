@@ -44,8 +44,8 @@
                             <td>
                                 @if ($post->tags)
                                     @foreach ($post->tags as $tag)
-                                        <div class="badge" style="background-color: {{ $tag->color }}">
-                                            {{ $tag->label }}</div>
+                                        <div class="badge" style="background-color: {{ $tag->color }} "> <span
+                                                style="color:white"> {{ $tag->label }}</span></div>
                                     @endforeach
                                 @endif
                             </td>
