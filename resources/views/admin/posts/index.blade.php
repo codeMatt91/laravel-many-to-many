@@ -43,10 +43,11 @@
                             </td>
                             <td>
                                 @if ($post->tags)
-                                    @foreach ($post->tags as $tag)
+                                    @forelse ($post->tags as $tag)
                                         <div class="badge" style="background-color: {{ $tag->color }} "> <span
                                                 style="color:white"> {{ $tag->label }}</span></div>
-                                    @endforeach
+                                    @empty -
+                                    @endforelse
                                 @endif
                             </td>
                             <td>{{ $post->slug }}</td>
@@ -67,31 +68,31 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <h1>Non ci sono post</h1>
-                    @endforelse
-                </tbody>
+                        @empty
+                            <h1>Non ci sono post</h1>
+                        @endforelse
+                    </tbody>
+                </table>
             </table>
-        </table>
-        @if ($posts->hasPages())
-            {{ $posts->links() }}
-        @endif
-    </div>
-@endsection
+            @if ($posts->hasPages())
+                {{ $posts->links() }}
+            @endif
+        </div>
+    @endsection
 
-@section('scripts')
-    <script>
-        // METODO PER APRIRE UNA MODALE E CHIEDERE CONFERMA ELIMINAZIONE
-        const deleteForms = document.querySelectorAll('.delete-form');
+    @section('scripts')
+        <script>
+            // METODO PER APRIRE UNA MODALE E CHIEDERE CONFERMA ELIMINAZIONE
+            const deleteForms = document.querySelectorAll('.delete-form');
 
-        deleteForms.forEach(form => {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
 
-                const confirmation = confirm(
-                    'Are you sure you want to delete this?');
-                if (confirmation) e.target.submit();
-            })
-        });
-    </script>
-@endsection
+                    const confirmation = confirm(
+                        'Are you sure you want to delete this?');
+                    if (confirmation) e.target.submit();
+                })
+            });
+        </script>
+    @endsection
