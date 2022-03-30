@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ModelsTag;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class ModelsTagController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ModelsTagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ModelsTag  $modelsTag
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(ModelsTag $modelsTag)
+    public function show(Tag $tag)
     {
         //
     }
@@ -52,10 +52,10 @@ class ModelsTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ModelsTag  $modelsTag
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsTag $modelsTag)
+    public function edit(Tag $tag)
     {
         //
     }
@@ -64,10 +64,10 @@ class ModelsTagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ModelsTag  $modelsTag
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsTag $modelsTag)
+    public function update(Request $request, Tag $tag)
     {
         //
     }
@@ -75,10 +75,10 @@ class ModelsTagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ModelsTag  $modelsTag
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ModelsTag $modelsTag)
+    public function destroy(Tag $tag)
     {
         //
     }
