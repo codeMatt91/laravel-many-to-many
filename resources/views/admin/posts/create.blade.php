@@ -45,7 +45,7 @@
                     <div class="form-check form-check-inline">
                         @foreach ($tags as $tag)
                             <input class="form-check-input ml-2" type="checkbox" id="tag-{{ $loop->iteration }}"
-                                value="{{ $tag->id }}" name="tags[]">
+                                value="{{ $tag->id }}" name="tags[]" @if (in_array($tag->id, old('tags'))) checked @endif>
                             <label class="form-check-label" for="tag-{{ $loop->iteration }}">{{ $tag->label }}</label>
                         @endforeach
                     </div>
