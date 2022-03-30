@@ -4,15 +4,22 @@
     <div class="container">
         <h2 class="mb-3">{{ $post->title }}</h2>
         <div class="d-flex mb-3">
-            <img width="100px" src="{{ $post->image }}"
-                alt="{{ $post->title }}">
+            <img width="100px" src="{{ $post->image }}" alt="{{ $post->title }}">
             <p class="ml-3">{{ $post->content }}</p>
         </div>
+        <div>
+            Tags:
+        </div>
+        <div>
+            @if ($post->tags)
+                @foreach ($post->tags as $tag)
+                    <div class="badge" style="background-color: {{ $tag->color }}">{{ $tag->label }}</div>
+                @endforeach
+            @endif
+        </div>
         <div class="d-flex">
-            <a href="{{ route('admin.posts.index', $post->id) }}"
-                class="btn btn-secondary mr-3">Indietro</a>
-            <form action="{{ route('admin.posts.destroy', $post->id) }}"
-                method="post" id="delete">
+            <a href="{{ route('admin.posts.index', $post->id) }}" class="btn btn-secondary mr-3">Indietro</a>
+            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post" id="delete">
                 @method('delete')
                 @csrf
                 <button type="submit" class="btn btn-danger">Elimina</button>

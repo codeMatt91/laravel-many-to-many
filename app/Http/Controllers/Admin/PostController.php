@@ -19,6 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $categories = Category::all();
         $posts = Post::orderBy('updated_at', 'DESC')->paginate(10);
         $tags = Tag::all();
@@ -32,9 +33,13 @@ class PostController extends Controller
      */
     public function create()
     {
+
         $categories = Category::all();
         $post = new Post();
         $tags = Tag::all();
+
+        //Qui ho già il post e posso fare la relazione con la relazione tags e mettere l'if perchè potrebbe non arrivarmi niente da $data[tags]
+       // if(array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
         return view('admin.posts.create', compact('categories', 'post', 'tags'));
     }
 
