@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
@@ -32,7 +33,8 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $post = new Post();
-        return view('admin.posts.create', compact('categories', 'post'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'post', 'tags'));
     }
 
     /**
@@ -47,13 +49,15 @@ class PostController extends Controller
             'title'=>'required|string|unique:posts|min:5/max:50',
             'content'=>'required|string',
             'image'=>'nullable|url',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags'=> 'nullable|exists:tags,id'
         ],
         [
             'title.required'=>'Il titolo è obbligatorio',
             'title.min'=>'La lunghezza minima del titolo è di 5 caratteri',
             'title.max'=>'La lunghezza massim del titolo è di 50 caratteri',
-            'title.unique'=>"Esiste già un post dal titolo $request->title"
+            'title.unique'=>"Esiste già un post dal titolo $request->title",
+            'tags.exists' => 'Il tag selezionato non è valido'
         ]);
 
 
@@ -65,7 +69,7 @@ class PostController extends Controller
         $post->fill($data);
         $post->save();
 
-        return redirect()->route('admin.posts.show', $post);
+        return redirect()->route('admin.posts.show', compact('post'));
 
     }
 
@@ -89,7 +93,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
