@@ -103,7 +103,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        // Sto recuperando dalla tabella di collegamento tra post e tag gli id dei tag relazionati con lo specifico post
+        $post_tags = $post->tags->pluck('id')->toArray();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'post_tags'));
     }
 
     /**
@@ -119,19 +121,24 @@ class PostController extends Controller
             'title'=>['required','string', 'min:5', 'max:50'],
             'content'=>'required|string',
             'image'=>'nullable|url',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags'=> 'nullable|exists:tags,id'
         ],
         [
             'title.required'=>'Il titolo è obbligatorio',
             'title.min'=>'La lunghezza minima del titolo è di 5 caratteri',
             'title.max'=>'La lunghezza massim del titolo è di 50 caratteri',
-            'title.unique'=>"Esiste già un post dal titolo $request->title"
+            'title.unique'=>"Esiste già un post dal titolo $request->title",
+            'tags.exists' => 'Il tag selezionato non è valido'
         ]);
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
         $post->update($data);
         
+        //Qui facciamo una relazione di sync per togliere e mettere i valori nella tabella e poi passarli alla show, se pero non arriva nulla allora cancella tutto quello che c'era prima
+        if(!array_key_exists('tags', $data)) $post->tags()->detach();
+        else $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.show', compact('post'));
 
