@@ -32,12 +32,12 @@
                             <option @if (old('category_id', $post->category_id) == $category->id) selected @endif value="{{ $category->id }}">
                                 {{ $category->label }}</option>
                         @endforeach
+                        @error('category_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </select>
-                    @error('category_id')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
                 </div>
 
                 <!-- TAG -->
@@ -48,6 +48,7 @@
                                 value="{{ $tag->id }}" name="tags[]" @if (in_array($tag->id, old('tags', []))) checked @endif>
                             <label class="form-check-label" for="tag-{{ $loop->iteration }}">{{ $tag->label }}</label>
                         @endforeach
+
                     </div>
                 </div>
 
@@ -57,12 +58,12 @@
                         <label for="content">Contenuto</label>
                         <textarea id="content" rows="6" class="form-control @error('content') is-invalid @enderror" name="content"
                             placeholder="Contenuto del post.."></textarea>
+                        @error('content')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
-                    @error('content')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
                 </div>
                 <div class="col-2">
                     @if ($post->image)

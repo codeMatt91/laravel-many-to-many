@@ -38,7 +38,7 @@
     </div>
 @endsection
 
-@section('script')
+{{-- @section('script')
     <script>
         // METODO PER APRIRE UNA MODALE E CHIEDERE CONFERMA ELIMINAZIONE
         const delectForm = document.getElementById('delete');
@@ -50,4 +50,4 @@
             if (accept) e.target.submit();
         });
     </script>
-@endsection
+@endsection --}}

@@ -55,7 +55,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|string|unique:posts|min:5/max:50',
+            'title'=>'required|string|unique:posts|min:3/max:50',
             'content'=>'required|string',
             'image'=>'nullable|image', //se voglio specif. le estenzioni: 'nullable|mimes:jpg,png,ecc..'
             'category_id' => 'nullable|exists:categories,id',
@@ -63,9 +63,11 @@ class PostController extends Controller
         ],
         [
             'title.required'=>'Il titolo è obbligatorio',
-            'title.min'=>'La lunghezza minima del titolo è di 5 caratteri',
+            'title.min'=>'La lunghezza minima del titolo è di 3 caratteri',
             'title.max'=>'La lunghezza massim del titolo è di 50 caratteri',
             'title.unique'=>"Esiste già un post dal titolo $request->title",
+            'content.required'=> 'Il contenuto è obbligatorio',
+            'category_id.exists'=>'Devi selezionare una categoria',
             'tags.exists' => 'Il tag selezionato non è valido'
         ]);
 
@@ -138,6 +140,8 @@ class PostController extends Controller
             'title.min'=>'La lunghezza minima del titolo è di 5 caratteri',
             'title.max'=>'La lunghezza massim del titolo è di 50 caratteri',
             'title.unique'=>"Esiste già un post dal titolo $request->title",
+            'content.required'=> 'Il contenuto è obbligatorio',
+            'category_id.exists'=>'Devi selezionare una categoria',
             'tags.exists' => 'Il tag selezionato non è valido'
         ]);
 
