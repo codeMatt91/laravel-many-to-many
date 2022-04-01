@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -37,6 +38,8 @@ class PostController extends Controller
         $categories = Category::all();
         $post = new Post();
         $tags = Tag::all();
+
+         
 
         //Qui ho già il post e posso fare la relazione con la relazione tags e mettere l'if perchè potrebbe non arrivarmi niente da $data[tags]
        // if(array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
@@ -72,13 +75,19 @@ class PostController extends Controller
         $post = new Post();
         $data['slug'] = Str::slug($request->title , '-');
 
+        // Qui preparo la pagina a ricere un file immagine da upload e salvarlo nel DB. 
+        if(array_key_exists('image', $data)) {
+            $img_post = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_post;
+        }
         $post->fill($data);
         $post->save();
 
         //Qui ho già il post e posso fare la relazione con la relazione tags e mettere l'if perchè potrebbe non arrivarmi niente da $data[tags]
         if(array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
-        return redirect()->route('admin.posts.show', compact('post'));
+
+        return redirect()->route('admin.posts.show', compact('post' ));
 
     }
 
@@ -134,6 +143,14 @@ class PostController extends Controller
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
+
+         // Qui preparo la pagina a ricevere un file immagine passato dalla store() e mostrarlo se c'è. 
+         if(array_key_exists('image', $data)) {
+            if($post->image) Storage::delete($post->image);
+
+            $img_post = Storage::put('post_image', $data['image']);
+            $data['image'] = $img_post;
+        }
         $post->update($data);
         
         //Qui facciamo una relazione di sync per togliere e mettere i valori nella tabella e poi passarli alla show, se pero non arriva nulla allora cancella tutto quello che c'era prima
@@ -152,6 +169,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->image) Storage::delete($post->image);
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('massage', "il post '$post->id' è stato eliminato")->with('type', 'success');

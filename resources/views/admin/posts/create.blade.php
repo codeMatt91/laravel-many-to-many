@@ -6,7 +6,7 @@
             <h1>Crea un nuovo Post</h1>
         </header>
 
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row mb-3">
                 <div class="col-8">
@@ -73,7 +73,7 @@
                 <div class="col-10 d-flex flex-column justify-content-center">
                     <div class="form-group">
                         <label for="image">Immagine</label>
-                        <input type="url" class="form-control" id="image" name="image">
+                        <input type="file" class="form-control-file" id="image" name="image">
                     </div>
                 </div>
             </div>
@@ -85,6 +85,8 @@
 @endsection
 
 @section('scripts')
+    {{-- Script per la preview dell'immagine --}}
+
     <script>
         const placeholder =
             "https://icons.iconarchive.com/icons/ccard3dev/dynamic-yosemite/1024/Preview-icon.png";
