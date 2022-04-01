@@ -65,8 +65,13 @@
                     @enderror
                 </div>
                 <div class="col-2">
-                    <img src="https://icons.iconarchive.com/icons/ccard3dev/dynamic-yosemite/1024/Preview-icon.png"
-                        alt="placeholder" class="img-fluid" id="preview">
+                    @if ($post->image)
+                        <img src="{{ asset("storage/$post->image") }}" alt="placeholder" class="img-fluid"
+                            id="preview">
+                    @else
+                        <img src=" https://icons.iconarchive.com/icons/ccard3dev/dynamic-yosemite/1024/Preview-icon.png"
+                            alt="placeholder" class="img-fluid" id="preview">
+                    @endif
                 </div>
 
                 <!-- IMMAGINE -->

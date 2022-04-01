@@ -2,11 +2,21 @@
 
 @section('content')
     <div class="container">
+        <!-- TITOLO -->
         <h2 class="mb-3">{{ $post->title }}</h2>
         <div class="d-flex mb-3">
-            <img width="100px" src="{{ asset(`storage/$post->image`) }}" alt="{{ $post->title }}">
+            <!-- IMMAGINE -->
+            @if ($post->image)
+                <img width="200" src="{{ asset("storage/$post->image") }}" alt="placeholder" class="img-fluid"
+                    id="preview">
+            @else
+                <img width="200" src=" https://icons.iconarchive.com/icons/ccard3dev/dynamic-yosemite/1024/Preview-icon.png"
+                    alt="placeholder" class="img-fluid" id="preview">
+            @endif
+            <!-- CONTENUTO DEL POST -->
             <p class="ml-3">{{ $post->content }}</p>
         </div>
+        <!-- TAG -->
         <div>
             Tags:
         </div>
