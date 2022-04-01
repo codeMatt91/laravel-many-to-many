@@ -57,7 +57,7 @@ class PostController extends Controller
         $request->validate([
             'title'=>'required|string|unique:posts|min:5/max:50',
             'content'=>'required|string',
-            'image'=>'nullable|url',
+            'image'=>'nullable|image', //se voglio specif. le estenzioni: 'nullable|mimes:jpg,png,ecc..'
             'category_id' => 'nullable|exists:categories,id',
             'tags'=> 'nullable|exists:tags,id'
         ],
@@ -77,7 +77,7 @@ class PostController extends Controller
 
         // Qui preparo la pagina a ricere un file immagine da upload e salvarlo nel DB. 
         if(array_key_exists('image', $data)) {
-            $img_post = Storage::put('uploads', $data['image']);
+            $img_post = Storage::put('uploads_img', $data['image']);
             $data['image'] = $img_post;
         }
         $post->fill($data);
@@ -129,7 +129,7 @@ class PostController extends Controller
         $request->validate([
             'title'=>['required','string', 'min:5', 'max:50'],
             'content'=>'required|string',
-            'image'=>'nullable|url',
+            'image'=>'nullable|image',
             'category_id' => 'nullable|exists:categories,id',
             'tags'=> 'nullable|exists:tags,id'
         ],

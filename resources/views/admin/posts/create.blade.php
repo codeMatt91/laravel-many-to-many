@@ -6,7 +6,7 @@
             <h1>Crea un nuovo Post</h1>
         </header>
 
-        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data" novalidate>
             @csrf
             <div class="row mb-3">
                 <div class="col-8">
@@ -14,7 +14,7 @@
                     <!-- TITOLO -->
                     <div class="form-group">
                         <label for="title">Titolo</label>
-                        <input type="text" class="form-control" @error('title') is-valid @enderror id="title" name="title">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title">
                         @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -26,7 +26,7 @@
                 <!-- CATEGORIA -->
                 <div class="col-4">
                     <label for="category">Catogoria</label>
-                    <select class="form-control" id="category" name="category_id" @error('category_id') is-valid @enderror>
+                    <select class="form-control @error('category_id') is-invalid @enderror" id="category" name="category_id">
                         <option value=""> Nessuna categoria</option>
                         @foreach ($categories as $category)
                             <option @if (old('category_id', $post->category_id) == $category->id) selected @endif value="{{ $category->id }}">
@@ -55,7 +55,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="content">Contenuto</label>
-                        <textarea id="content" rows="6" class="form-control" name="content" @error('content') is-valid @enderror
+                        <textarea id="content" rows="6" class="form-control @error('content') is-invalid @enderror" name="content"
                             placeholder="Contenuto del post.."></textarea>
                     </div>
                     @error('content')
@@ -73,7 +73,8 @@
                 <div class="col-10 d-flex flex-column justify-content-center">
                     <div class="form-group">
                         <label for="image">Immagine</label>
-                        <input type="file" class="form-control-file" id="image" name="image">
+                        <input type="file" class="form-control-file @error('image') is-invalid @enderror" id="image"
+                            name="image">
                     </div>
                 </div>
             </div>
