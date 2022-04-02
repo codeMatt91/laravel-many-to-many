@@ -16,9 +16,9 @@ class SendNewMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -28,6 +28,6 @@ class SendNewMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.email');
+        return $this->view('mails.email', ['post' => $this->post]);
     }
 }

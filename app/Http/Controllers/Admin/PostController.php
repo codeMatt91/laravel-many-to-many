@@ -92,7 +92,7 @@ class PostController extends Controller
         if(array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
         //Creo un istanza di mail e invio la mail
-        $mail_new_post = new SendNewMail();
+        $mail_new_post = new SendNewMail($post);
         $user = Auth::user();
         Mail::to($user->email)->send($mail_new_post);
 
