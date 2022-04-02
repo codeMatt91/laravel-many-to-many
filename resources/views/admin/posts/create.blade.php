@@ -65,6 +65,8 @@
                         @enderror
                     </div>
                 </div>
+                <!-- IMMAGINE PREVIEW-->
+
                 <div class="col-2">
                     @if ($post->image)
                         <img src="{{ asset("storage/$post->image") }}" alt="placeholder" class="img-fluid"
@@ -101,9 +103,19 @@
         const imgPreview = document.getElementById('preview');
 
         imgInput.addEventListener('change', e => {
-            const url = imgInput.value;
-            if (url) imgPreview.setAttribute('src', url);
-            else imgPreview.setAttribute('src', placeholder);
+            // CONTROLLO SE HO UN FILE CARICATO sennò si spacca tutto
+            if (imgInput.files && imgInput.files[0]) {
+                let reader = new FileReader();
+                // funzione asincrona : accetta un file e lo elabora e crea un url 
+                reader.readAsDataURL(imgInput.files[0]);
+                // essendo asincrona quando il file è pronto esegui la funzione
+                reader.onload = (e) => {
+                    imgPreview.setAttribute('src', e.target.result);
+                } else {
+                    imgPreview.setAttribute('src', placeholder);
+
+                }
+            }
         })
     </script>
 @endsection

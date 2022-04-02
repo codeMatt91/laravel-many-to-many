@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendNewMail;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -88,6 +91,10 @@ class PostController extends Controller
         //Qui ho già il post e posso fare la relazione con la relazione tags e mettere l'if perchè potrebbe non arrivarmi niente da $data[tags]
         if(array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
+        //Creo un istanza di mail e invio la mail
+        $mail_new_post = new SendNewMail();
+        $user = Auth::user();
+        Mail::to($user->email)->send($mail_new_post);
 
         return redirect()->route('admin.posts.show', compact('post' ));
 
