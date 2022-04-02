@@ -15,10 +15,14 @@
         .card {
             display: flex;
             text-align: center;
-            width: 50%;
             justify-content: center;
             border: 1px solid black;
             box-shadow: 0px 0px 10px #888888;
+        }
+
+        #post {
+            padding: 10px;
+            width: 50%;
         }
 
     </style>
@@ -27,10 +31,10 @@
 <body>
     <h2>Il tuo posto è stato pubblicato</h2>
     <div class="card">
-        <div>
+        <div id="post">
             <div>{{ $post->title }}</div>
             <div>{{ $post->content }}</div>
-            <i>{{ $post->updated_at }}</i>
+            <i>Creato il :{{ $post->updated_at }}</i>
         </div>
     </div>
 </body>
