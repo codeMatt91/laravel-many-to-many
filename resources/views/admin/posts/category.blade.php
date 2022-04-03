@@ -3,13 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @php
-                dd($category->posts);
-            @endphp
             @foreach ($category->posts as $post)
-                <div class="col-4">
+                <div class="col-6">
                     <div class="d-flex">
-                        <div class="mr-3">{{ $post->image }}</div>
+                        @if (is_file($post->image))
+                            <div class="mr-3">{{ $post->image }}</div>
+                        @endif
                         <h2>{{ $post->title }}</h2>
                     </div>
                     <p>{{ $post->content }}</p>
